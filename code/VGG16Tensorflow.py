@@ -11,8 +11,8 @@ from tensorflow.keras.utils import to_categorical
 )
 
 ## Resizing images
-train_ds = tf.image.resize(train_ds, (224, 224))
-test_ds = tf.image.resize(test_ds, (224, 224))
+train_ds = tf.image.resize(train_ds, (150, 150))
+test_ds = tf.image.resize(test_ds, (150, 150))
 
 ## Transforming labels to correct format
 train_labels = to_categorical(train_labels, num_classes=5)
