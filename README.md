@@ -13,7 +13,7 @@ the references algorithms that use for this project is <br/>
 </p>
 
 ## Description
-- This Github will contains the algorithms of GoogLeNet, VGG16, and Alex Net and the comparisson of these three
+- This Github will contains the algorithms of GoogLeNet, VGG16, and Alex Net and the comparisson of these three for application in the star pattern identifying field
 - This code is made and tested in google collaboratory   
 
 ## 
