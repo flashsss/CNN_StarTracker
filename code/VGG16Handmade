@@ -4,48 +4,6 @@ from keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPool2D , Flatten
 from keras.preprocessing.image import ImageDataGenerator
 
-import os
-import numpy as np
-import shutil
-import random
-root_dir = "./flowers"
-classes_dir = ["/daisy", "/dandelion", "/rose", "/sunflower", "/tulip"]
-
-test_ratio = 0.20
-
-for cls in classes_dir:
-    os.makedirs(root_dir +'train/' + cls)
-    os.makedirs(root_dir +'test/' + cls)
-
-src = root_dir + cls
-
-allFileNames = os.listdir(src)
-np.random.shuffle(allFileNames)
-train_FileNames, test_FileNames = np.split(np.array(allFileNames),
-                                                          [int(len(allFileNames)* (1 - test_ratio))])
-
-
-train_FileNames = [src+'/'+ name for name in train_FileNames.tolist()]
-test_FileNames = [src+'/' + name for name in test_FileNames.tolist()]
-
-print("*****************************")
-print('Total images: ', len(allFileNames))
-print('Training: ', len(train_FileNames))
-print('Testing: ', len(test_FileNames))
-print("*****************************")
-
-
-lab = ["/daisy", "/dandelion", "/rose", "/sunflower", "/tulip"]
-
-for name in train_FileNames:
-    for i in lab:
-        shutil.copy(name, root_dir +'train/' + i)
-
-for name in test_FileNames:
-    for i in lab:
-        shutil.copy(name, root_dir +'test/' + i)
-print("Copying Done!")
-
 trdata = ImageDataGenerator()
 traindata = trdata.flow_from_directory(directory="flowerstrain",target_size=(224,224))
 tsdata = ImageDataGenerator()
@@ -73,6 +31,10 @@ model.add(Flatten())
 model.add(Dense(units=4096,activation="relu"))
 model.add(Dense(units=4096,activation="relu"))
 model.add(Dense(units=5, activation="softmax"))
+
+from tensorflow.keras.optimizers import Adam
+opt = Adam(learning_rate=0.001)
+model.compile(optimizer=opt, loss=keras.losses.categorical_crossentropy, metrics=['accuracy'])
 
 from keras.callbacks import ModelCheckpoint, EarlyStopping
 checkpoint = ModelCheckpoint("vgg16_1.h5", monitor='val_acc', verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
