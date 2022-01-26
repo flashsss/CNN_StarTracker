@@ -37,8 +37,8 @@ opt = Adam(learning_rate=0.001)
 model.compile(optimizer=opt, loss=keras.losses.categorical_crossentropy, metrics=['accuracy'])
 
 from keras.callbacks import ModelCheckpoint, EarlyStopping
-checkpoint = ModelCheckpoint("vgg16_1.h5", monitor='val_acc', verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
-early = EarlyStopping(monitor='val_acc', min_delta=0, patience=5, verbose=1, mode='auto')
+checkpoint = ModelCheckpoint("vgg16_1.h5", monitor='val_accuracy', verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
+early = EarlyStopping(monitor='val_accuracy', min_delta=0, patience=5, verbose=1, mode='auto')
 hist = model.fit_generator(generator=traindata, validation_data= testdata, validation_steps=10,epochs=100,callbacks=[checkpoint,early])
 
 import matplotlib.pyplot as plt
