@@ -37,9 +37,10 @@ opt = Adam(learning_rate=0.001)
 model.compile(optimizer=opt, loss=keras.losses.categorical_crossentropy, metrics=['accuracy'])
 
 from keras.callbacks import ModelCheckpoint, EarlyStopping
+
 checkpoint = ModelCheckpoint("vgg16_1.h5", monitor='val_accuracy', verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
 early = EarlyStopping(monitor='val_accuracy', min_delta=0, patience=5, verbose=1, mode='auto')
-hist = model.fit_generator(generator=traindata, validation_data= testdata, validation_steps=10,epochs=100,callbacks=[checkpoint,early])
+hist = model.fit_generator(steps_per_epoch=50, generator=traindata, validation_data= testdata, validation_steps=10,epochs=100,callbacks=[checkpoint,early])
 
 import matplotlib.pyplot as plt
 plt.plot(hist.history['accuracy'])
@@ -51,3 +52,15 @@ plt.ylabel("Accuracy")
 plt.xlabel("Epoch")
 plt.legend(["Accuracy","Validation Accuracy","loss","Validation Loss"])
 plt.show()
+
+from keras.preprocessing import image
+from keras.applications.vgg16 import decode_predictions
+import numpy as np
+img = image.load_img("./flowers/daisy/5547758_eea9edfd54_n.jpg",target_size=(224,224))
+img = np.asarray(img)
+plt.imshow(img)
+img = np.expand_dims(img, axis=0)
+from keras.models import load_model
+saved_model = load_model("vgg16_1.h5")
+output = saved_model.predict(img)
+label = decode_predictions(img)
