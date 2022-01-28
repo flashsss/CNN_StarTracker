@@ -4,10 +4,11 @@ import os,os.path
 import PIL
 import matplotlib.pyplot as plt
 import tensorflow as tf
+
 from tensorflow import keras
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Conv2D, MaxPool2D , Flatten
+from keras.layers import Dense, Conv2D, MaxPool2D , Flatten
 
 DIR = "./flowers"
 
@@ -33,19 +34,32 @@ val_ds = tf.keras.utils.image_dataset_from_directory(
 class_names = train_ds.class_names
 print(class_names)
 
+plt.figure(figsize=(10, 10))
+    for images, labels in train_ds.take(1):
+      for i in range(9):
+      ax = plt.subplot(3, 3, i + 1)
+      plt.imshow(images[i].numpy().astype("uint8"))
+      plt.title(class_names[labels[i]])
+      plt.axis("off")
+
+for image_batch, labels_batch in train_ds:
+  print(image_batch.shape)
+  print(labels_batch.shape)
+  break
+
 AUTOTUNE = tf.data.AUTOTUNE
 
 train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
 val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
 normalization_layer = layers.Rescaling(1./255)
+
 normalized_ds = train_ds.map(lambda x, y: (normalization_layer(x), y))
 image_batch, labels_batch = next(iter(normalized_ds))
 first_image = image_batch[0]
 # Notice the pixel values are now in `[0,1]`.
 print(np.min(first_image), np.max(first_image))
 
-# creating model
 model = Sequential()
 model.add(Conv2D(input_shape=(224,224,3),filters=64,kernel_size=(3,3),padding="same", activation="relu"))
 model.add(Conv2D(filters=64,kernel_size=(3,3),padding="same", activation="relu"))
@@ -74,10 +88,11 @@ model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy,
               metrics=['accuracy'])
 
+
 hist = model.fit(
   train_ds,
   validation_data=val_ds,
-  epochs=10,
+  epochs=10
 )
 
 plt.plot(hist.history['accuracy'])
