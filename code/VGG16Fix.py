@@ -78,7 +78,6 @@ hist = model.fit(
   train_ds,
   validation_data=val_ds,
   epochs=10,
-  validation_split = 0.2
 )
 
 plt.plot(hist.history['accuracy'])
