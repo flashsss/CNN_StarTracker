@@ -9,7 +9,6 @@ import imutils
 import pandas as pd
 
 def createDataSetDirectories(featureOption):
-    os.mkdir('./class_image')
     os.mkdir('./dataset')
     os.mkdir('./dataset/'+featureOption)
     os.mkdir('./dataset/'+featureOption+'/train')
