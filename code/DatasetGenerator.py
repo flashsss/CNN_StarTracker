@@ -9,6 +9,7 @@ import imutils
 import pandas as pd
 
 def createDataSetDirectories(featureOption):
+    os.mkdir('./class_image')
     os.mkdir('./dataset')
     os.mkdir('./dataset/'+featureOption)
     os.mkdir('./dataset/'+featureOption+'/train')
@@ -400,7 +401,7 @@ def create_star_image(ra,de,roll,catalogue_path,f=0.00304,myu=1.12*(10**-6)):
 
 path_catalog = "Below_" + str(4.0) + "_SAO.csv"
 path_catalog_6 = "Below_" + str(6.0) + "_SAO.csv"
-saving_path = '../class_image/'
+saving_path = './class_image/'
 
 
 catalogue = pd.read_csv(path_catalog)
