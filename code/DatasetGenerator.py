@@ -419,7 +419,7 @@ for i in range(len(star_id_list)):
     cv2.imwrite(saving_path+str(i)+'.jpg',image)
 
 #Getting the raw images from the directory
-path = '../class_image/'
+path = './class_image/'
 featureMethod = 'multitriangle'
 
 #prepare new dataset directories
