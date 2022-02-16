@@ -398,7 +398,7 @@ def create_star_image(ra,de,roll,catalogue_path,f=0.00304,myu=1.12*(10**-6)):
 
     return background
 
-path_catalog = '../'+"Below_" + str(4.0) + "_SAO.csv"
+path_catalog = "Below_" + str(4.0) + "_SAO.csv"
 path_catalog_6 = "Below_" + str(6.0) + "_SAO.csv"
 saving_path = '../class_image/'
 
