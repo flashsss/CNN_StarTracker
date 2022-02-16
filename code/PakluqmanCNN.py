@@ -48,7 +48,7 @@ cnn.add(tf.keras.layers.Flatten())
 #FULL CONNECTION
 cnn.add(tf.keras.layers.Dense(units=256,activation='relu'))
 cnn.add(tf.keras.layers.Dense(units=128,activation='relu'))
-cnn.add(tf.keras.layers.Dense(8,activation='softmax'))
+cnn.add(tf.keras.layers.Dense(480,activation='softmax'))
 
 #TRAINING THE CONVOLUTIONAL NEURAL NETWORK
 #Compiling the CNN
