@@ -1,8 +1,6 @@
 import tensorflow as tf
 from keras.preprocessing.image import ImageDataGenerator
 import matplotlib as plt
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 #To prevent overfitting -> training on the same images
 #DATA PREPROCESSING
