@@ -1,3 +1,5 @@
+"""## Import the necessary libraries"""
+
 import cv2
 import os
 import numpy as np
@@ -7,6 +9,10 @@ from operator import itemgetter
 import shutil
 import imutils
 import pandas as pd
+
+"""## Build local modules
+### Necessary module
+"""
 
 def createDataSetDirectories(featureOption):
     os.mkdir('./dataset')
@@ -21,10 +27,11 @@ def displayImg(img,cmap='gray'):
     ax.imshow(img,cmap)
     plt.show()
 
+"""### Net Algorithm Feature Module Generation"""
+
 #Net Algorithm
-def net_feature(image,n):
-    # img = cv2.imread(path)
-    img = image   
+def net_feature(path,n):
+    img = cv2.imread(path)   
     
     #Find the center of the image
     height,width,col = img.shape
@@ -68,6 +75,8 @@ def net_feature(image,n):
         cv2.line(img,pivot_star_coord,tuple(coordinate),(255,0,0),2)
 
     return img
+
+"""### Multi-triangles Feature Module Generation"""
 
 #Multitriangles Algorithm
 def multitriangles_detector(image,n):
@@ -116,6 +125,8 @@ def multitriangles_detector(image,n):
                 cv2.line(img,coord,other_coord,(255,0,0),2)
 
     return img
+
+"""### Circle Feature Module"""
 
 #Circle
 def centroiding(path):
@@ -188,27 +199,33 @@ def centroiding(path):
     
     return img
 
+"""# generating_data Main
+## generating_data.py
+"""
+
 #Reading in Pandas Dataframe and Cleaning Data
-excel_catalogue = pd.read_csv('./SAO.csv')
-# tidy_catalogue = excel_catalogue.rename(columns = {'Unnamed: 0': 'Star ID', 'Unnamed: 1': 'RA', 'Unnamed: 2': 'DE', 'Unnamed: 3': "Magnitude"}, inplace=False)
+excel_catalogue = pd.read_csv('./DATA/SAO.csv')
+# tidy_catalogue = excel_catalogue.rename(columns = {'Unnamed: 0': 'Star_ID', 'Unnamed: 1': 'RA', 'Unnamed: 2': 'DE', 'Unnamed: 3': "Magnitude"}, inplace=False)
 tidy_catalogue = excel_catalogue
 
-
 #Filtering Magnitude
-magnitude_filter = 6.0
-less_and_equal_Mv = tidy_catalogue['Magnitude']<=magnitude_filter
-filtered_catalogue = tidy_catalogue[less_and_equal_Mv]
+magnitude_filter = 4.0
+less_and_equal_6 = tidy_catalogue['Magnitude']<=magnitude_filter
+filtered_catalogue = tidy_catalogue[less_and_equal_6]
 
 #Saving to CSV File
 file_name = "Below_" + str(magnitude_filter) + "_SAO.csv"
-filtered_catalogue.to_csv(file_name)
+filtered_catalogue.to_csv("./class_image/"+file_name)
+
+"""## Nested Function
+generate star images based on magnitudo constraint
+"""
 
 from math import radians,degrees,sin,cos,tan,sqrt,atan,pi,exp
 
 
 def displayImg(img,cmap='gray'):
     """[Displays image]
-
     Args:
         img ([numpy array]): [the pixel values in the form of numpy array]
         cmap ([string], optional): [can be 'gray']. Defaults to None.
@@ -220,7 +237,6 @@ def displayImg(img,cmap='gray'):
 
 def create_star_image(ra,de,roll,catalogue_path,f=0.00304,myu=1.12*(10**-6)):
     """[summary]
-
     Args:
         ra ([float]): [right ascension in degrees]
         de ([float]): [declination in degrees]
@@ -230,7 +246,6 @@ def create_star_image(ra,de,roll,catalogue_path,f=0.00304,myu=1.12*(10**-6)):
 
     def create_M_matrix(ra,de,roll,method=2):
         """[summary]
-
         Args:
             ra ([int]): [right ascension of sensor center]
             de ([int]): [declination of sensor center]
@@ -261,7 +276,6 @@ def create_star_image(ra,de,roll,catalogue_path,f=0.00304,myu=1.12*(10**-6)):
 
     def dir_vector_to_star_sensor(ra,de,M_transpose):
         """[Converts direction vector to star sensor coordinates]
-
         Args:
             ra ([int]): [right ascension of the object vector]
             de ([int]): [desclination of the object vector]
@@ -276,7 +290,6 @@ def create_star_image(ra,de,roll,catalogue_path,f=0.00304,myu=1.12*(10**-6)):
 
     def draw_star(x,y,magnitude,gaussian,background,ROI=5):
         """[Draws the star in the background image]
-
         Args:
             x ([int]): [The x coordinate in the image coordinate system (starting from left to right)]
             y ([int]): [The y coordinate in the image coordinate system (starting from top to bottom)]
@@ -304,7 +317,6 @@ def create_star_image(ra,de,roll,catalogue_path,f=0.00304,myu=1.12*(10**-6)):
 
     def add_noise(low,high,background):
         """[Adds noise to an image]
-
         Args:
             low ([int]): [lower threshold of the noise generated]
             high ([int]): [maximum pixel value of the noise generated]
@@ -335,7 +347,7 @@ def create_star_image(ra,de,roll,catalogue_path,f=0.00304,myu=1.12*(10**-6)):
     M_transpose = np.round(np.matrix.transpose(M),decimals=5)
 
     #Search for image-able stars
-    col_list = ["Star ID","RA","DE","Magnitude"]
+    col_list = ["Star_ID","RA","DE","Magnitude"]
     star_catalogue = pd.read_csv(catalogue_path,usecols=col_list)
     R = (sqrt((radians(FOVx)**2)+(radians(FOVy)**2))/2)
     alpha_start = (ra - (R/cos(de)))
@@ -346,8 +358,8 @@ def create_star_image(ra,de,roll,catalogue_path,f=0.00304,myu=1.12*(10**-6)):
     star_within_de_range = (delta_start <= star_catalogue['DE']) & (star_catalogue['DE'] <= delta_end)
     star_in_ra = star_catalogue[star_within_ra_range]
     star_in_de = star_catalogue[star_within_de_range]
-    star_in_de = star_in_de[['Star ID']].copy()
-    stars_within_FOV = pd.merge(star_in_ra,star_in_de,on="Star ID")
+    star_in_de = star_in_de[['Star_ID']].copy()
+    stars_within_FOV = pd.merge(star_in_ra,star_in_de,on="Star_ID")
 
     #Converting to star sensor coordinate system
     ra_i = list(stars_within_FOV['RA'])
@@ -398,27 +410,29 @@ def create_star_image(ra,de,roll,catalogue_path,f=0.00304,myu=1.12*(10**-6)):
 
     return background
 
-path_catalog = "Below_" + str(4.0) + "_SAO.csv"
-path_catalog_6 = "Below_" + str(6.0) + "_SAO.csv"
-saving_path = './class_image/'
+path_catalog = "./class_image/"+"Below_" + str(magnitude_filter) + "_SAO.csv"
+saving_path = './class_image_4/'
 
 
 catalogue = pd.read_csv(path_catalog)
 ra_list = list(catalogue['RA'])
 de_list = list(catalogue['DE'])
-star_id_list = list(catalogue['Star ID'])
+star_id_list = list(catalogue['Star_ID'])
     
 #Iterating through all stars
 for i in range(len(star_id_list)):
-    # print("STAR {0} of {1}".format(i+1,len(star_id_list)))
+    print("STAR {0} of {1}".format(i+1,len(star_id_list)))
     star_id = star_id_list[i]
     ra = degrees(ra_list[i])
     de = degrees(de_list[i])
-    image = create_star_image(ra,de,0,path_catalog_6)
+    image = create_star_image(ra,de,0,path_catalog)
+    image = image[924:1540,1230:2050]
     cv2.imwrite(saving_path+str(i)+'.jpg',image)
 
+"""## Create train set"""
+
 #Getting the raw images from the directory
-path = './class_image/'
+path = './class_image_4/'
 featureMethod = 'multitriangle'
 
 #prepare new dataset directories
@@ -443,10 +457,10 @@ for index,image in enumerate(dataset):
   file_name = '0.jpg'
   cv2.imwrite(path+file_name,image)
 
-featureMethod = 'multitriangle'
+"""## generating_dataset_for_jaring"""
+
 images = []
-n=20
-last=0
+
 for i in range(480):
     path = './dataset/'+featureMethod+'/train/'+str(i)
     img = cv2.imread(path+'/0.jpg')
@@ -462,10 +476,3 @@ for index,image in enumerate(images):
       cv2.imwrite(path+str(count)+'.jpg',rotated)
       print("DONE SAVING...",path+str(count)+'.jpg')
       count+=1
-
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-gray = cv2.GaussianBlur(gray, (5,5), 0)
-(minVal, maxVal, minLoc, maxLoc) = cv2.minMaxLoc(gray)
-cv2.circle(img, maxLoc, 5, (255, 0, 0), 2)
-displayImg(img)
-print(maxLoc)
