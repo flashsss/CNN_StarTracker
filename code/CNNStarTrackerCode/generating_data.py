@@ -417,7 +417,7 @@ saving_path = './class_image_4/'
 catalogue = pd.read_csv(path_catalog)
 ra_list = list(catalogue['RA'])
 de_list = list(catalogue['DE'])
-star_id_list = list(catalogue['Star_ID'])
+star_id_list = list(catalogue['Star ID'])
     
 #Iterating through all stars
 for i in range(len(star_id_list)):
