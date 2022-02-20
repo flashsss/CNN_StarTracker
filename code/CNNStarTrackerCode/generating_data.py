@@ -204,7 +204,7 @@ def centroiding(path):
 """
 
 #Reading in Pandas Dataframe and Cleaning Data
-excel_catalogue = pd.read_csv('./DATA/SAO.csv')
+excel_catalogue = pd.read_csv('./SAO.csv')
 # tidy_catalogue = excel_catalogue.rename(columns = {'Unnamed: 0': 'Star_ID', 'Unnamed: 1': 'RA', 'Unnamed: 2': 'DE', 'Unnamed: 3': "Magnitude"}, inplace=False)
 tidy_catalogue = excel_catalogue
 
