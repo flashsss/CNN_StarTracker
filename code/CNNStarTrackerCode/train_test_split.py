@@ -1,4 +1,4 @@
-"""## Import the necessary libraries"""
+# Import the necessary libraries
 
 import os
 import random as rd
