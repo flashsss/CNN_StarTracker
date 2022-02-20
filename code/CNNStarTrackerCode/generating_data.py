@@ -347,7 +347,7 @@ def create_star_image(ra,de,roll,catalogue_path,f=0.00304,myu=1.12*(10**-6)):
     M_transpose = np.round(np.matrix.transpose(M),decimals=5)
 
     #Search for image-able stars
-    col_list = ["Star_ID","RA","DE","Magnitude"]
+    col_list = ["Star ID","RA","DE","Magnitude"]
     star_catalogue = pd.read_csv(catalogue_path,usecols=col_list)
     R = (sqrt((radians(FOVx)**2)+(radians(FOVy)**2))/2)
     alpha_start = (ra - (R/cos(de)))
@@ -358,8 +358,8 @@ def create_star_image(ra,de,roll,catalogue_path,f=0.00304,myu=1.12*(10**-6)):
     star_within_de_range = (delta_start <= star_catalogue['DE']) & (star_catalogue['DE'] <= delta_end)
     star_in_ra = star_catalogue[star_within_ra_range]
     star_in_de = star_catalogue[star_within_de_range]
-    star_in_de = star_in_de[['Star_ID']].copy()
-    stars_within_FOV = pd.merge(star_in_ra,star_in_de,on="Star_ID")
+    star_in_de = star_in_de[['Star ID']].copy()
+    stars_within_FOV = pd.merge(star_in_ra,star_in_de,on="Star ID")
 
     #Converting to star sensor coordinate system
     ra_i = list(stars_within_FOV['RA'])
