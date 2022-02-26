@@ -209,7 +209,7 @@ excel_catalogue = pd.read_csv('./SAO.csv')
 tidy_catalogue = excel_catalogue
 
 #Filtering Magnitude
-magnitude_filter = 4.0
+magnitude_filter = 6.0
 less_and_equal_6 = tidy_catalogue['Magnitude']<=magnitude_filter
 filtered_catalogue = tidy_catalogue[less_and_equal_6]
 
@@ -410,7 +410,8 @@ def create_star_image(ra,de,roll,catalogue_path,f=0.00304,myu=1.12*(10**-6)):
 
     return background
 
-path_catalog = "./class_image/"+"Below_" + str(magnitude_filter) + "_SAO.csv"
+path_catalog = "./class_image/"+"Below_" + str(4.0) + "_SAO.csv"
+path_catalog_6 = "./class_image/"+"Below_" + str(6.0) + "_SAO.csv"
 saving_path = './class_image_4/'
 
 
@@ -426,7 +427,7 @@ for i in range(len(star_id_list)):
     ra = degrees(ra_list[i])
     de = degrees(de_list[i])
     image = create_star_image(ra,de,0,path_catalog)
-    image = image[924:1540,1230:2050]
+    image = image[1120:1344,1528:1752]
     cv2.imwrite(saving_path+str(i)+'.jpg',image)
 
 """## Create train set"""
@@ -470,7 +471,7 @@ for i in range(480):
 for index,image in enumerate(images):
     count = 1
     path = './dataset/'+featureMethod+'/train/'+str(index)+'/'
-    for angle in np.arange(0,360,30):
+    for angle in np.arange(0,360,15):
       rotated = imutils.rotate_bound(image,angle)
       rotated = multitriangles_detector(rotated,5)
       cv2.imwrite(path+str(count)+'.jpg',rotated)
