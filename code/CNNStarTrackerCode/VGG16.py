@@ -60,7 +60,7 @@ model.add(Dense(units=4096,activation="relu"))
 model.add(Dense(units=480, activation="softmax"))
 
 model.compile(loss='categorical_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
-history = model.fit(x = training_set,validation_data=test_set,epochs=40)
+history = model.fit(x = training_set,validation_data=test_set,epochs=50)
 
 #SAVING THE MODEL
 model.save('../Results/Trained_Mini_StarTracker_VGG16.h5')

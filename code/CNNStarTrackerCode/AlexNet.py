@@ -62,7 +62,7 @@ cnn.add(tf.keras.layers.Dense(480,activation='softmax'))
 #Compiling the CNN
 cnn.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['accuracy'])
 #Training the CNN on the Training set and evaluating it on the Test set
-history = cnn.fit(x=training_set,validation_data=test_set,epochs=15)
+history = cnn.fit(x=training_set,validation_data=test_set,epochs=50)
 
 #SAVING THE MODEL
 cnn.save('../Results/Trained_Mini_StarTracker_AlexNet.h5')
