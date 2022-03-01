@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 #To prevent overfitting -> training on the same images
 #DATA PREPROCESSING
 #TRAIN
-featureMethod = 'multitriangle'
+featureMethod = 'jaring'
 path = './dataset/'+featureMethod
 train_datagen = ImageDataGenerator(
     rescale=1./255,
