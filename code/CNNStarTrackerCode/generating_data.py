@@ -31,7 +31,7 @@ def displayImg(img,cmap='gray'):
 
 #Net Algorithm
 def net_feature(path,n):
-    img = image(path)   
+    img = image
     
     #Find the center of the image
     height,width,col = img.shape
