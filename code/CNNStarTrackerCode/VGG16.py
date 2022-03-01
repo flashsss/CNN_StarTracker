@@ -11,7 +11,7 @@ from keras.layers import Dense, Conv2D, MaxPool2D , Flatten
 #To prevent overfitting -> training on the same images
 #DATA PREPROCESSING
 #TRAIN
-featureMethod = 'multitriangle'
+featureMethod = 'jaring'
 path = './dataset/'+featureMethod
 train_datagen = ImageDataGenerator(
     rescale=1./255,
