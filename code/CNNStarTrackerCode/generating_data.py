@@ -31,7 +31,7 @@ def displayImg(img,cmap='gray'):
 
 #Net Algorithm
 def net_feature(path,n):
-    img = cv2.imread(path)   
+    img = image(path)   
     
     #Find the center of the image
     height,width,col = img.shape
@@ -473,7 +473,7 @@ for index,image in enumerate(images):
     path = './dataset/'+featureMethod+'/train/'+str(index)+'/'
     for angle in np.arange(0,360,15):
       rotated = imutils.rotate_bound(image,angle)
-      rotated = multitriangles_detector(rotated,5)
+      rotated = net_feature(rotated,5)
       cv2.imwrite(path+str(count)+'.jpg',rotated)
       print("DONE SAVING...",path+str(count)+'.jpg')
       count+=1
