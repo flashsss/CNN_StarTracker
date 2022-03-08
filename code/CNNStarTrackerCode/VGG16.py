@@ -13,12 +13,7 @@ from keras.layers import Dense, Conv2D, MaxPool2D , Flatten
 #TRAIN
 featureMethod = 'jaring'
 path = './dataset/'+featureMethod
-train_datagen = ImageDataGenerator(
-    rescale=1./255,
-    shear_range=0.2,
-    zoom_range=0.2,
-    horizontal_flip=True
-)
+train_datagen = ImageDataGenerator(rescale=1./255)
 training_set = train_datagen.flow_from_directory(
     path+'/train',
     target_size=(224,224),
@@ -63,7 +58,7 @@ model.compile(loss='categorical_crossentropy',optimizer='rmsprop',metrics=['accu
 history = model.fit(x = training_set,validation_data=test_set,epochs=50)
 
 #SAVING THE MODEL
-model.save('../Results/Trained_Mini_StarTracker_VGG16.h5')
+model.save('./Results/Trained_Mini_StarTracker_VGG16.h5')
 
 # summarize history for accuracy
 plt.plot(history.history['accuracy'])
