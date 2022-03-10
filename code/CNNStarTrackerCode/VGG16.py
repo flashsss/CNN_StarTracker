@@ -53,6 +53,7 @@ model.add(Flatten())
 model.add(Dense(units=4096,activation="relu"))
 model.add(Dense(units=4096,activation="relu"))
 model.add(Dense(units=480, activation="softmax"))
+model.summary()
 
 model.compile(loss='categorical_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
 history = model.fit(x = training_set,validation_data=test_set,epochs=50)
