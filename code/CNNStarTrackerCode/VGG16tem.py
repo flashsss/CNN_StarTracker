@@ -41,4 +41,4 @@ vggmodel.compile(loss = "categorical_crossentropy", optimizer = "rmsprop", metri
 from keras.callbacks import ModelCheckpoint, LearningRateScheduler, TensorBoard, EarlyStopping
 checkpoint = ModelCheckpoint("vgg16_1.h5", monitor='val_acc', verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
 early = EarlyStopping(monitor='val_acc', min_delta=0, patience=40, verbose=1, mode='auto')
-hist = vggmodel.fit_generator(generator= training_set, steps_per_epoch= 2, epochs= 50, validation_data= test_set, validation_steps=1, callbacks=[checkpoint,early])
+history = vggmodel.fit(x = training_set,validation_data=test_set,epochs=50)
