@@ -38,7 +38,4 @@ vggmodel = VGG16(weights='imagenet', include_top=True)
 vggmodel.summary()
 
 vggmodel.compile(loss = "categorical_crossentropy", optimizer = "rmsprop", metrics=["accuracy"])
-from keras.callbacks import ModelCheckpoint, LearningRateScheduler, TensorBoard, EarlyStopping
-checkpoint = ModelCheckpoint("vgg16_1.h5", monitor='val_acc', verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
-early = EarlyStopping(monitor='val_acc', min_delta=0, patience=40, verbose=1, mode='auto')
 history = vggmodel.fit(x = training_set,validation_data=test_set,epochs=50)
