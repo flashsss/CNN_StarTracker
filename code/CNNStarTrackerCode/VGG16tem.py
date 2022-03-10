@@ -34,4 +34,5 @@ test_set = test_datagen.flow_from_directory(
 )
 
 from keras.applications.vgg16 import VGG16
+vggmodel = VGG16(weights='imagenet', include_top=True)
 vggmodel.summary()
