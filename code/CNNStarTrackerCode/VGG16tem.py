@@ -35,6 +35,8 @@ test_set = test_datagen.flow_from_directory(
 
 from keras.applications.vgg16 import VGG16
 vggmodel = VGG16(weights='imagenet', include_top=True)
+X= vggmodel.layers[-2].output
+predictions = Dense(2, activation="softmax")(X)
 vggmodel.summary()
 
 vggmodel.compile(loss = "categorical_crossentropy", optimizer = "rmsprop", metrics=["accuracy"])
