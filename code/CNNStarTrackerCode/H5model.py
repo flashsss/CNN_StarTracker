@@ -1,4 +1,5 @@
 from tensorflow.keras.models import load_model
+import cv2
 model = load_model('./Results/preprocessed_features_model.h5')
 
 img = cv2.imread("./class_image_4/300.jpg") 
