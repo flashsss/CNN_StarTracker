@@ -39,7 +39,7 @@ for layers in (vggmodel.layers)[:19]:
     print(layers)
     layers.trainable = False
 X= vggmodel.layers[-2].output
-predictions = Dense(2, activation="softmax")(X)
+predictions = Dense(480, activation="softmax")(X)
 model_final = Model(input = vggmodel.input, output = predictions)
 model_final.summary()
 
