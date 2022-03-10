@@ -41,7 +41,7 @@ for layers in (vggmodel.layers)[:19]:
     layers.trainable = False
 X= vggmodel.layers[-2].output
 predictions = Dense(480, activation="softmax")(X)
-model_final = Model(input = vggmodel.input, output = predictions)
+model_final = Model(input = vggmodel, output = predictions)
 model_final.compile(loss = "categorical_crossentropy", optimizer = optimizers.SGD(lr=0.0001, momentum=0.9), metrics=["accuracy"])
 from keras.callbacks import ModelCheckpoint, LearningRateScheduler, TensorBoard, EarlyStopping
 checkpoint = ModelCheckpoint("vgg16_1.h5", monitor='val_acc', verbose=1, save_best_only=True, save_weights_only=False, mode='auto', period=1)
