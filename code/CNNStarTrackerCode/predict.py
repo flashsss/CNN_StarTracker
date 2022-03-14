@@ -75,6 +75,6 @@ gol = net_feature(newimg,5)
 displayImg(gol)
 print("gol shape: ",gol.shape)
 
-model = keras.models.load_model('./Results/simplecnn.h5')
+model = keras.models.load_model('./Results/preprocessed_features_model.h5)
 prediction = model.predict(gol)
 print(prediction)
