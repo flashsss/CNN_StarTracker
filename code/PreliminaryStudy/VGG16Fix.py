@@ -10,7 +10,7 @@ from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPool2D , Flatten
 
-DIR = "./flowers"
+DIR = "../flowers"
 
 batch_size = 32
 img_height = 224
