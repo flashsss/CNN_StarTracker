@@ -76,5 +76,9 @@ displayImg(gol)
 print("gol shape: ",gol.shape)
 
 model = keras.models.load_model('./Results/preprocessed_features_model.h5')
+
+gol = cv2.resize(gol,(224,224))
+gol = gol.reshape(1,224,224,3) 
+
 prediction = model.predict(gol)
 print(prediction)
