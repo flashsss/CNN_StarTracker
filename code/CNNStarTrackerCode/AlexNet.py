@@ -7,7 +7,12 @@ import matplotlib.pyplot as plt
 #TRAIN
 featureMethod = 'jaring'
 path = './dataset/'+featureMethod
-train_datagen = ImageDataGenerator(rescale=1./255,)
+train_datagen = ImageDataGenerator(
+    rescale=1./255,
+    shear_range=0.2,
+    zoom_range=0.2,
+    horizontal_flip=True
+)
 training_set = train_datagen.flow_from_directory(
     path+'/train',
     target_size=(227,227),
@@ -23,6 +28,7 @@ test_set = test_datagen.flow_from_directory(
     batch_size=32,
     class_mode='categorical'
 )
+
 
 #BUILDING THE CONVOLUTIONAL NEURAL NETWORK
 cnn = tf.keras.models.Sequential() #Sequence of layers
