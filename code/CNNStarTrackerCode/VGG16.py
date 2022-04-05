@@ -4,7 +4,7 @@ import tensorflow as tf
 from keras.preprocessing.image import ImageDataGenerator
 import matplotlib.pyplot as plt
 from keras.models import Sequential
-from keras.layers import Dense, Conv2D, MaxPool2D , Flatten
+from keras.layers import Dense, Conv2D, MaxPool2D , Flatten, LeakyReLU
 
 """# CNN Main"""
 
@@ -13,7 +13,12 @@ from keras.layers import Dense, Conv2D, MaxPool2D , Flatten
 #TRAIN
 featureMethod = 'jaring'
 path = './dataset/'+featureMethod
-train_datagen = ImageDataGenerator(rescale=1./255)
+train_datagen = ImageDataGenerator(
+    rescale=1./255,
+    shear_range=0.2,
+    zoom_range=0.2,
+    horizontal_flip=True
+)
 training_set = train_datagen.flow_from_directory(
     path+'/train',
     target_size=(224,224),
@@ -31,27 +36,40 @@ test_set = test_datagen.flow_from_directory(
 )
 
 model = Sequential()
-model.add(Conv2D(input_shape=(224,224,3),filters=64,kernel_size=(3),padding="same", activation="relu"))
-model.add(Conv2D(filters=64,kernel_size=(3),padding="same", activation="relu"))
+model.add(Conv2D(input_shape=(224,224,3),filters=64,kernel_size=(3),padding="same"))
+model.add(LeakyReLU(alpha=0.05))
+model.add(Conv2D(filters=64,kernel_size=(3),padding="same"))
+model.add(LeakyReLU(alpha=0.05))
 model.add(MaxPool2D(pool_size=(2),strides=(2)))
-model.add(Conv2D(filters=128, kernel_size=(3), padding="same", activation="relu"))
-model.add(Conv2D(filters=128, kernel_size=(3), padding="same", activation="relu"))
+model.add(Conv2D(filters=128, kernel_size=(3), padding="same"))
+model.add(LeakyReLU(alpha=0.05))
+model.add(Conv2D(filters=128, kernel_size=(3), padding="same"))
+model.add(LeakyReLU(alpha=0.05))
 model.add(MaxPool2D(pool_size=(2),strides=(2)))
-model.add(Conv2D(filters=256, kernel_size=(3), padding="same", activation="relu"))
-model.add(Conv2D(filters=256, kernel_size=(3), padding="same", activation="relu"))
-model.add(Conv2D(filters=256, kernel_size=(3), padding="same", activation="relu"))
+model.add(Conv2D(filters=256, kernel_size=(3), padding="same"))
+model.add(LeakyReLU(alpha=0.05))
+model.add(Conv2D(filters=256, kernel_size=(3), padding="same"))
+model.add(LeakyReLU(alpha=0.05))
+model.add(Conv2D(filters=256, kernel_size=(3), padding="same"))
+model.add(LeakyReLU(alpha=0.05))
 model.add(MaxPool2D(pool_size=(2),strides=(2)))
-model.add(Conv2D(filters=512, kernel_size=(3), padding="same", activation="relu"))
-model.add(Conv2D(filters=512, kernel_size=(3), padding="same", activation="relu"))
-model.add(Conv2D(filters=512, kernel_size=(3), padding="same", activation="relu"))
+model.add(Conv2D(filters=512, kernel_size=(3), padding="same"))
+model.add(LeakyReLU(alpha=0.05))
+model.add(Conv2D(filters=512, kernel_size=(3), padding="same"))
+model.add(LeakyReLU(alpha=0.05))
+model.add(Conv2D(filters=512, kernel_size=(3), padding="same"))
+model.add(LeakyReLU(alpha=0.05))
 model.add(MaxPool2D(pool_size=(2),strides=(2)))
-model.add(Conv2D(filters=512, kernel_size=(3), padding="same", activation="relu"))
-model.add(Conv2D(filters=512, kernel_size=(3), padding="same", activation="relu"))
-model.add(Conv2D(filters=512, kernel_size=(3), padding="same", activation="relu"))
+model.add(Conv2D(filters=512, kernel_size=(3), padding="same"))
+model.add(LeakyReLU(alpha=0.05))
+model.add(Conv2D(filters=512, kernel_size=(3), padding="same"))
+model.add(LeakyReLU(alpha=0.05))
+model.add(Conv2D(filters=512, kernel_size=(3), padding="same"))
+model.add(LeakyReLU(alpha=0.05))
 model.add(MaxPool2D(pool_size=(2),strides=(2)))
 model.add(Flatten())
-model.add(Dense(units=4096,activation="relu"))
-model.add(Dense(units=4096,activation="relu"))
+model.add(Dense(units=4096))
+model.add(Dense(units=4096))
 model.add(Dense(units=480, activation="softmax"))
 model.summary()
 
