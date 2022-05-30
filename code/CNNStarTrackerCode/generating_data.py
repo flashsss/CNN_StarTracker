@@ -407,7 +407,7 @@ for i in range(480):
 for index,image in enumerate(images):
     count = 1
     path = './dataset/'+featureMethod+'/train/'+str(index)+'/'
-    for angle in np.arange(0,360,2.5):
+    for angle in np.arange(0,360,45):
       rotated = imutils.rotate_bound(image,angle)
       rotated = multitriangles_detector(rotated,5)
       cv2.imwrite(path+str(count)+'.jpg',rotated)
