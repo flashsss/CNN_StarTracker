@@ -73,7 +73,7 @@ model.add(Dense(units=4096))
 model.add(Dense(units=480, activation="softmax"))
 model.summary()
 
-model.compile(loss='categorical_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy',optimizer='adam',metrics=['accuracy'])
 history = model.fit(x = training_set,validation_data=test_set,epochs=50)
 
 #SAVING THE MODEL
