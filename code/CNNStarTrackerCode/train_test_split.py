@@ -20,13 +20,13 @@ def extract_from_list(list,ratio):
 
 """# Train Test Split - Main"""
 
-featureMethod = 'jaring'
+featureMethod = 'multitriangle'
 path = './dataset/'+featureMethod
 folders = os.listdir(path+'/train/') #['0', '1', '2', '3', '4', '5', '6', '7']
 
 for folder in folders:
     shuffled = get_files_and_shuffle(path+'/train/'+str(folder)) #List of shuffled list -> name of files of type string
-    test_files = extract_from_list(shuffled,0.15)
+    test_files = extract_from_list(shuffled,0.2)
     for filename in test_files:
         shutil.move(path+'/train/'+str(folder)+'/'+str(filename),path+'/test/'+str(folder)+'/'+str(filename))
 
