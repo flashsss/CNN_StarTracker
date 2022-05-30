@@ -27,59 +27,11 @@ def displayImg(img,cmap='gray'):
     ax.imshow(img,cmap)
     plt.show()
 
-"""### Net Algorithm Feature Module Generation"""
-
-#Net Algorithm
-def net_feature(path,n):
-    img = cv2.imread(path)   
-    
-    #Find the center of the image
-    height,width,col = img.shape
-    coordinate = [height/2,width/2]
-    y = int(coordinate[0])
-    x = int(coordinate[1])
-    print(x,y)
-
-    #Set up the detector
-    params = cv2.SimpleBlobDetector_Params()
-    params.filterByInertia = False
-    params.filterByConvexity = False
-    params.minThreshold = 50
-    params.maxThreshold = 255
-    params.filterByColor = True
-    params.blobColor = 255
-    params.filterByArea = False
-    params.minArea = 1
-    detector = cv2.SimpleBlobDetector_create(params)
-
-    #Detect stars
-    keypoints = detector.detect(img)
-    coord = []
-    for index,keypoint in enumerate(keypoints):
-        x_centralstar = int(round(keypoints[index].pt[0]))
-        y_centralstar = int(round(keypoints[index].pt[1]))
-        distance_to_center = sqrt(((x_centralstar-x)**2)+((y_centralstar-y)**2))
-        coord.append([x_centralstar,y_centralstar,distance_to_center])
-
-    coord = sorted(coord,key=itemgetter(2))
-    coord = coord[:n]
-    for item in coord:
-        cv2.circle(img,center=(item[0],item[1]),radius=2,color=(255,0,0),thickness=2)
-
-    pivot_star_coord = tuple(coord[0][0:2])
-    del coord[0]
-
-    #Draw lines from pivot point to other stars
-    for coordinate in coord:
-        coordinate = coordinate[0:2]
-        cv2.line(img,pivot_star_coord,tuple(coordinate),(255,0,0),2)
-
-    return img
-
 """### Multi-triangles Feature Module Generation"""
 
 #Multitriangles Algorithm
 def multitriangles_detector(image,n):
+    img = cv2.imread(path) 
     img = image 
 
     #Find the center of the image
@@ -112,7 +64,7 @@ def multitriangles_detector(image,n):
     coord = sorted(coord,key=itemgetter(2))
     stars_coordinate = coord[:n]
     for item in stars_coordinate:
-        cv2.circle(img,center=(item[0],item[1]),radius=2,color=(255,0,0),thickness=2)
+        cv2.circle(img,center=(item[0],item[1]),radius=2,color=(255,255,255),thickness=3)
 
     for coord in stars_coordinate:
         coord = tuple(coord[0:2])
@@ -122,7 +74,7 @@ def multitriangles_detector(image,n):
                 continue
             else:
                 other_coord = tuple(other_coord)
-                cv2.line(img,coord,other_coord,(255,0,0),2)
+                cv2.line(img,coord,other_coord,(255,255,255),1)
 
     return img
 
@@ -471,7 +423,7 @@ for i in range(480):
 for index,image in enumerate(images):
     count = 1
     path = './dataset/'+featureMethod+'/train/'+str(index)+'/'
-    for angle in np.arange(0,360,15):
+    for angle in np.arange(0,360,2.5):
       rotated = imutils.rotate_bound(image,angle)
       rotated = multitriangles_detector(rotated,5)
       cv2.imwrite(path+str(count)+'.jpg',rotated)
