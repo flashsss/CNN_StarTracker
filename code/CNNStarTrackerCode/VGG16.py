@@ -21,7 +21,7 @@ train_datagen = ImageDataGenerator(
 )
 training_set = train_datagen.flow_from_directory(
     path+'/train',
-    target_size=(616,820),
+    target_size=(224,224),
     batch_size=32,
     class_mode='categorical'
 )
@@ -30,13 +30,13 @@ training_set = train_datagen.flow_from_directory(
 test_datagen = ImageDataGenerator(rescale=1./255)
 test_set = test_datagen.flow_from_directory(
     path+'/test',
-    target_size=(616,820),
+    target_size=(224,224),
     batch_size=32,
     class_mode='categorical'
 )
 
 model = Sequential()
-model.add(Conv2D(input_shape=(616,820,3),filters=64,kernel_size=(3),padding="same"))
+model.add(Conv2D(input_shape=(224,224,3),filters=64,kernel_size=(3),padding="same"))
 model.add(LeakyReLU(alpha=0.05))
 model.add(Conv2D(filters=64,kernel_size=(3),padding="same"))
 model.add(LeakyReLU(alpha=0.05))
@@ -68,8 +68,8 @@ model.add(Conv2D(filters=512, kernel_size=(3), padding="same"))
 model.add(LeakyReLU(alpha=0.05))
 model.add(MaxPool2D(pool_size=(2),strides=(2)))
 model.add(Flatten())
-model.add(Dense(units=4096))
-model.add(Dense(units=4096))
+model.add(Dense(units=4096,activation ='relu'))
+model.add(Dense(units=4096,activation='relu'))
 model.add(Dense(units=480, activation="softmax"))
 model.summary()
 

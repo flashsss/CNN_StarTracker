@@ -274,8 +274,8 @@ def create_star_image(ra,de,roll,catalogue_path,f=0.00304,myu=1.12*(10**-6)):
     roll = radians(float(roll))
 
     #Star sensor pixel
-    l = 3280
-    w = 2464
+    l = 224
+    w = 224
 
     #Star sensor FOV
     FOVy = degrees(2*atan((myu*w/2)/f))
@@ -366,7 +366,6 @@ for i in range(len(star_id_list)):
     ra = degrees(ra_list[i])
     de = degrees(de_list[i])
     image = create_star_image(ra,de,0,path_catalog_6)
-    image = image[924:1540,1230:2050]
     cv2.imwrite(saving_path+str(i)+'.jpg',image)
 
 #Getting the raw images from the directory
@@ -407,9 +406,10 @@ for i in range(480):
 for index,image in enumerate(images):
     count = 1
     path = './dataset/'+featureMethod+'/train/'+str(index)+'/'
-    for angle in np.arange(0,360,45):
+    for angle in np.arange(0,360,10):
       rotated = imutils.rotate_bound(image,angle)
       rotated = multitriangles_detector(rotated,5)
+      rotated = cv2.resize(rotated, (224, 224), interpolation=cv2.INTER_NEAREST)
       cv2.imwrite(path+str(count)+'.jpg',rotated)
       print("DONE SAVING...",path+str(count)+'.jpg')
       count+=1

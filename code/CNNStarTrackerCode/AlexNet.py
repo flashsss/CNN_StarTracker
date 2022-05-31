@@ -15,7 +15,7 @@ train_datagen = ImageDataGenerator(
 )
 training_set = train_datagen.flow_from_directory(
     path+'/train',
-    target_size=(616,820),
+    target_size=(224,224),
     batch_size=32,
     class_mode='categorical'
 )
@@ -24,7 +24,7 @@ training_set = train_datagen.flow_from_directory(
 test_datagen = ImageDataGenerator(rescale=1./255)
 test_set = test_datagen.flow_from_directory(
     path+'/test',
-    target_size=(616,820),
+    target_size=(224,224),
     batch_size=32,
     class_mode='categorical'
 )
@@ -33,24 +33,19 @@ test_set = test_datagen.flow_from_directory(
 #BUILDING THE CONVOLUTIONAL NEURAL NETWORK
 cnn = tf.keras.models.Sequential() #Sequence of layers
 #CONVOLUTION 1
-cnn.add(tf.keras.layers.Conv2D(filters=96,kernel_size=(11,11),strides=4,input_shape=[616,820,3]))
-cnn.add(tf.keras.layers.LeakyReLU(alpha=0.05))
+cnn.add(tf.keras.layers.Conv2D(filters=96,kernel_size=(11,11),strides=4,input_shape=[224,224,3],activation='relu'))
 #POOLING 1
 cnn.add(tf.keras.layers.MaxPool2D(pool_size=(3,3),strides=2))
 #CONVOLUTION 2
-cnn.add(tf.keras.layers.Conv2D(filters=256,kernel_size=(5,5),strides=1))
-cnn.add(tf.keras.layers.LeakyReLU(alpha=0.05))
+cnn.add(tf.keras.layers.Conv2D(filters=256,kernel_size=(5,5),strides=1,activation='relu'))
 #POOLING 2
-cnn.add(tf.keras.layers.MaxPool2D(pool_size=(3,3),strides=2))
+cnn.add(tf.keras.layers.MaxPool2D(pool_size=(3,3),strides=2,activation='relu'))
 #CONVOLUTION 3
-cnn.add(tf.keras.layers.Conv2D(filters=384,kernel_size=(3,3),strides=1))
-cnn.add(tf.keras.layers.LeakyReLU(alpha=0.05))
+cnn.add(tf.keras.layers.Conv2D(filters=384,kernel_size=(3,3),strides=1),activation='relu')
 #CONVOLUTION 4
-cnn.add(tf.keras.layers.Conv2D(filters=384,kernel_size=(3,3),strides=1))
-cnn.add(tf.keras.layers.LeakyReLU(alpha=0.05))
+cnn.add(tf.keras.layers.Conv2D(filters=384,kernel_size=(3,3),strides=1),activation='relu')
 #CONVOLUTION 5
-cnn.add(tf.keras.layers.Conv2D(filters=256,kernel_size=(3,3),strides=1))
-cnn.add(tf.keras.layers.LeakyReLU(alpha=0.05))
+cnn.add(tf.keras.layers.Conv2D(filters=256,kernel_size=(3,3),strides=1),activation='relu')
 #POOLING 3
 cnn.add(tf.keras.layers.MaxPool2D(pool_size=(3,3),strides=2))
 
@@ -58,13 +53,10 @@ cnn.add(tf.keras.layers.MaxPool2D(pool_size=(3,3),strides=2))
 cnn.add(tf.keras.layers.Flatten())
 #FULL CONNECTION
 cnn.add(tf.keras.layers.Dropout(0.5))
-cnn.add(tf.keras.layers.Dense(units=4096))
-cnn.add(tf.keras.layers.LeakyReLU(alpha=0.05))
+cnn.add(tf.keras.layers.Dense(units=4096,activation='relu'))
 cnn.add(tf.keras.layers.Dropout(0.5))
-cnn.add(tf.keras.layers.Dense(units=4096))
-cnn.add(tf.keras.layers.LeakyReLU(alpha=0.05))
-cnn.add(tf.keras.layers.Dense(units=1000))
-cnn.add(tf.keras.layers.LeakyReLU(alpha=0.05))
+cnn.add(tf.keras.layers.Dense(units=4096,activation='relu'))
+cnn.add(tf.keras.layers.Dense(units=1000,activation='relu'))
 cnn.add(tf.keras.layers.Dense(480,activation='softmax'))
 
 #TRAINING THE CONVOLUTIONAL NEURAL NETWORK
