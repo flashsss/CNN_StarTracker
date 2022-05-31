@@ -68,12 +68,12 @@ model.add(Conv2D(filters=512, kernel_size=(3), padding="same"))
 model.add(LeakyReLU(alpha=0.05))
 model.add(MaxPool2D(pool_size=(2),strides=(2)))
 model.add(Flatten())
-model.add(Dense(units=4096,activation ='relu'))
+model.add(Dense(units=4096,activation='relu'))
 model.add(Dense(units=4096,activation='relu'))
 model.add(Dense(units=480, activation="softmax"))
 model.summary()
 
-model.compile(loss='categorical_crossentropy',optimizer='adam',metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy',optimizer='rmsprop',metrics=['accuracy'])
 history = model.fit(x = training_set,validation_data=test_set,epochs=50)
 
 #SAVING THE MODEL
