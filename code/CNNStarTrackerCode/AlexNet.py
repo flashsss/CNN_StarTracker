@@ -15,7 +15,7 @@ train_datagen = ImageDataGenerator(
 )
 training_set = train_datagen.flow_from_directory(
     path+'/train',
-    target_size=(224,224),
+    target_size=(227,227),
     batch_size=32,
     class_mode='categorical'
 )
@@ -24,7 +24,7 @@ training_set = train_datagen.flow_from_directory(
 test_datagen = ImageDataGenerator(rescale=1./255)
 test_set = test_datagen.flow_from_directory(
     path+'/test',
-    target_size=(224,224),
+    target_size=(227,227),
     batch_size=32,
     class_mode='categorical'
 )
@@ -33,7 +33,7 @@ test_set = test_datagen.flow_from_directory(
 #BUILDING THE CONVOLUTIONAL NEURAL NETWORK
 cnn = tf.keras.models.Sequential() #Sequence of layers
 #CONVOLUTION 1
-cnn.add(tf.keras.layers.Conv2D(filters=96,kernel_size=(11,11),strides=4,input_shape=[224,224,3],activation='relu'))
+cnn.add(tf.keras.layers.Conv2D(filters=96,kernel_size=(11,11),strides=4,input_shape=[227,227,3],activation='relu'))
 #POOLING 1
 cnn.add(tf.keras.layers.MaxPool2D(pool_size=(3,3),strides=2))
 #CONVOLUTION 2
