@@ -33,7 +33,7 @@ test_set = test_datagen.flow_from_directory(
 #BUILDING THE CONVOLUTIONAL NEURAL NETWORK
 cnn = tf.keras.models.Sequential() #Sequence of layers
 #CONVOLUTION 1
-cnn.add(tf.keras.layers.Conv2D(filters=96,kernel_size=(11,11),strides=4,input_shape=[227,227,3],activation='relu'))
+cnn.add(tf.keras.layers.Conv2D(filters=96,kernel_size=(11,11),strides=4,activation='relu',input_shape=[227,227,3]))
 #POOLING 1
 cnn.add(tf.keras.layers.MaxPool2D(pool_size=(3,3),strides=2))
 #CONVOLUTION 2
