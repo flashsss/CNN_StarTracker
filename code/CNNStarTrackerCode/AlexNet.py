@@ -41,11 +41,11 @@ cnn.add(tf.keras.layers.Conv2D(filters=256,kernel_size=(5,5),strides=1,activatio
 #POOLING 2
 cnn.add(tf.keras.layers.MaxPool2D(pool_size=(3,3),strides=2))
 #CONVOLUTION 3
-cnn.add(tf.keras.layers.Conv2D(filters=384,kernel_size=(3,3),strides=1),activation='relu')
+cnn.add(tf.keras.layers.Conv2D(filters=384,kernel_size=(3,3),strides=1,activation='relu'))
 #CONVOLUTION 4
-cnn.add(tf.keras.layers.Conv2D(filters=384,kernel_size=(3,3),strides=1),activation='relu')
+cnn.add(tf.keras.layers.Conv2D(filters=384,kernel_size=(3,3),strides=1,activation='relu'))
 #CONVOLUTION 5
-cnn.add(tf.keras.layers.Conv2D(filters=256,kernel_size=(3,3),strides=1),activation='relu')
+cnn.add(tf.keras.layers.Conv2D(filters=256,kernel_size=(3,3),strides=1,activation='relu'))
 #POOLING 3
 cnn.add(tf.keras.layers.MaxPool2D(pool_size=(3,3),strides=2))
 
