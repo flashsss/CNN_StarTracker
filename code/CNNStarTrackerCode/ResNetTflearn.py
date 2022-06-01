@@ -1,36 +1,30 @@
-from keras.layers import Input, Lambda, Dense, Flatten
-from keras.models import Model
-from keras.applications.ResNet50 import ResNet50
-from keras.applications.ResNet50 import preprocess_input
-from keras.preprocessing import image
-from keras.preprocessing.image import ImageDataGenerator
-from keras.models import Sequential
-import numpy as np
-from glob import glob
 import matplotlib.pyplot as plt
+import numpy as np
+import PIL
+import tensorflow as tf
+from tensorflow.keras import layers,Dense,Flatten
+from tensorflow.keras.models import Sequential
+from keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.optimizers import Adam
+from keras.applications.vgg16 import preprocess_input
 
-import warnings
-warnings.filterwarnings("ignore", category=FutureWarning)
-
-IMAGE_SIZE = [224, 224]
 train_path = './dataset/multitriangle/train'
 test_path = './dataset/multitriangle/test'
-resnet = ResNet50(input_shape=IMAGE_SIZE + [3], weights='imagenet', include_top=False)
-resnet.input
-for layer in resnet.layers:
-  layer.trainable = False
-folders = glob('./dataset/multitriangle/train/*')
-print(len(folders))
-x = Flatten()(resnet.output)
-prediction = Dense(len(folders), activation='softmax')(x)
-model = Model(inputs=resnet.input, outputs=prediction)
-model.summary()
 
-from keras import optimizers
+resnet_model = Sequential()
 
-model.compile(loss='binary_crossentropy',
-              optimizer='rmsprop',
-              metrics=['accuracy'])
+pretrained_model= tf.keras.applications.ResNet50(include_top=False,
+                   input_shape=(180,180,3),
+                   pooling='avg',classes=5,
+                   weights='imagenet')
+for layer in pretrained_model.layers:
+        layer.trainable=False
+
+resnet_model.add(pretrained_model)
+resnet_model.add(Flatten())
+resnet_model.add(Dense(512, activation='relu'))
+resnet_model.add(Dense(480, activation='softmax'))
+resnet_model.compile(optimizer=Adam(lr=0.001),loss='categorical_crossentropy',metrics=['accuracy'])
 
 train_datagen = ImageDataGenerator(
     preprocessing_function=preprocess_input,
@@ -62,32 +56,17 @@ test_set = test_datagen.flow_from_directory(test_path,
                                             batch_size = 32,
                                             class_mode = 'categorical')
 
-from datetime import datetime
-from keras.callbacks import ModelCheckpoint
+history = resnet_model.fit(train_set, validation_data=test_set, epochs=30)
 
-checkpoint = ModelCheckpoint(filepath='ResNetmodel.h5', 
-                               verbose=2, save_best_only=True)
-
-callbacks = [checkpoint]
-
-start = datetime.now()
-
-model_history=model.fit_generator(
-  train_set,
-  validation_data=test_set,
-  epochs=30,
-  validation_steps=32,
-    callbacks=callbacks ,verbose=2)
-
-duration = datetime.now() - start
-print("Training completed in time: ", duration)
-
-# Plot training & validation loss values
-plt.plot(model_history.history['accuracy'])
-plt.plot(model_history.history['val_accuracy'])
-plt.title('CNN Model accuracy values')
+fig1 = plt.gcf()
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.axis(ymin=0.4,ymax=1)
+plt.grid()
+plt.title('Model Accuracy')
 plt.ylabel('Accuracy')
-plt.xlabel('Epoch')
-plt.legend(['Train', 'Test'], loc='upper left')
+plt.xlabel('Epochs')
+plt.legend(['train', 'validation'])
 plt.show()
 
+resnet_model.save('./Results/ResNet_model.h5')
