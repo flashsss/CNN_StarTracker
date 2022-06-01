@@ -13,7 +13,7 @@ test_path = './dataset/multitriangle/test'
 resnet_model = Sequential()
 
 pretrained_model= tf.keras.applications.ResNet50(include_top=False,
-                   input_shape=(180,180,3),
+                   input_shape=(224,224,3),
                    pooling='avg',classes=5,
                    weights='imagenet')
 for layer in pretrained_model.layers:

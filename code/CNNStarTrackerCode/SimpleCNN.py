@@ -36,17 +36,17 @@ test_set = test_datagen.flow_from_directory(
 #BUILDING THE CONVOLUTIONAL NEURAL NETWORK
 cnn = tf.keras.models.Sequential() #Sequence of layers
 #CONVOLUTION 1
-cnn.add(tf.keras.layers.Conv2D(filters=128,kernel_size=3,activation='relu',input_shape=[224,224,3]))
+cnn.add(tf.keras.layers.Conv2D(filters=128,kernel_size=(3,3),activation='relu',input_shape=[224,224,3]))
 #POOLING 1
-cnn.add(tf.keras.layers.MaxPool2D(pool_size=2,strides=2))
+cnn.add(tf.keras.layers.MaxPool2D(pool_size=(2,2),strides=2))
 #CONVOLUTION 2
-cnn.add(tf.keras.layers.Conv2D(filters=64,kernel_size=3,activation='relu'))
+cnn.add(tf.keras.layers.Conv2D(filters=64,kernel_size=(3,3),activation='relu'))
 #POOLING 2
-cnn.add(tf.keras.layers.MaxPool2D(pool_size=2,strides=2))
+cnn.add(tf.keras.layers.MaxPool2D(pool_size=(2,2),strides=2))
 #CONVOLUTION 3
-cnn.add(tf.keras.layers.Conv2D(filters=32,kernel_size=3,activation='relu'))
+cnn.add(tf.keras.layers.Conv2D(filters=32,kernel_size=(3,3),activation='relu'))
 #POOLING 3
-cnn.add(tf.keras.layers.MaxPool2D(pool_size=2,strides=2))
+cnn.add(tf.keras.layers.MaxPool2D(pool_size=(2,2),strides=2))
 
 #FLATTENING
 cnn.add(tf.keras.layers.Flatten())

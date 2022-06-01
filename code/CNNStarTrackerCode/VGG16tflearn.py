@@ -27,7 +27,7 @@ prediction = Dense(len(folders), activation='softmax')(x)
 model = Model(inputs=vgg.input, outputs=prediction)
 model.summary()
 
-model.compile(loss='binary_crossentropy',
+model.compile(loss='categorical_crossentropy',
               optimizer=Adam(learning_rate=0.001),
               metrics=['accuracy'])
 
