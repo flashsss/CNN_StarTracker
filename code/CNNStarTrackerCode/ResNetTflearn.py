@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import PIL
 import tensorflow as tf
-from tensorflow.keras import layers,Dense,Flatten
 from tensorflow.keras.models import Sequential
 from keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.optimizers import Adam
@@ -21,9 +20,9 @@ for layer in pretrained_model.layers:
         layer.trainable=False
 
 resnet_model.add(pretrained_model)
-resnet_model.add(Flatten())
-resnet_model.add(Dense(512, activation='relu'))
-resnet_model.add(Dense(480, activation='softmax'))
+resnet_model.add(tf.keras.layers.Flatten())
+resnet_model.add(tf.keras.layers.Dense(units=512, activation='relu'))
+resnet_model.add(tf.keras.layers.Dense(units=480, activation='softmax'))
 resnet_model.compile(optimizer=Adam(lr=0.001),loss='categorical_crossentropy',metrics=['accuracy'])
 
 train_datagen = ImageDataGenerator(
