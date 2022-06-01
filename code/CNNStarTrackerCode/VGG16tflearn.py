@@ -28,7 +28,7 @@ model = Model(inputs=vgg.input, outputs=prediction)
 model.summary()
 
 model.compile(loss='binary_crossentropy',
-              optimizer='rmsprop',
+              optimizer=Adam,
               metrics=['accuracy'])
 
 train_datagen = ImageDataGenerator(
