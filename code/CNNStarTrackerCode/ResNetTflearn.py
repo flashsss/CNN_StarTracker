@@ -1,7 +1,7 @@
 from keras.layers import Input, Lambda, Dense, Flatten
 from keras.models import Model
-from keras.applications.vgg16 import VGG16
-from keras.applications.vgg16 import preprocess_input
+from keras.applications.ResNet50 import ResNet50
+from keras.applications.ResNet50 import preprocess_input
 from keras.preprocessing import image
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
@@ -15,15 +15,15 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 IMAGE_SIZE = [224, 224]
 train_path = './dataset/multitriangle/train'
 test_path = './dataset/multitriangle/test'
-vgg = VGG16(input_shape=IMAGE_SIZE + [3], weights='imagenet', include_top=False)
-vgg.input
-for layer in vgg.layers:
+resnet = ResNet50(input_shape=IMAGE_SIZE + [3], weights='imagenet', include_top=False)
+resnet.input
+for layer in resnet.layers:
   layer.trainable = False
 folders = glob('./dataset/multitriangle/train/*')
 print(len(folders))
-x = Flatten()(vgg.output)
+x = Flatten()(resnet.output)
 prediction = Dense(len(folders), activation='softmax')(x)
-model = Model(inputs=vgg.input, outputs=prediction)
+model = Model(inputs=resnet.input, outputs=prediction)
 model.summary()
 
 from keras import optimizers
@@ -65,7 +65,7 @@ test_set = test_datagen.flow_from_directory(test_path,
 from datetime import datetime
 from keras.callbacks import ModelCheckpoint
 
-checkpoint = ModelCheckpoint(filepath='VGG16model.h5', 
+checkpoint = ModelCheckpoint(filepath='ResNetmodel.h5', 
                                verbose=2, save_best_only=True)
 
 callbacks = [checkpoint]
