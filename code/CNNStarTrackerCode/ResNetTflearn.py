@@ -55,17 +55,26 @@ test_set = test_datagen.flow_from_directory(test_path,
                                             batch_size = 32,
                                             class_mode = 'categorical')
 
-history = resnet_model.fit(train_set, validation_data=test_set, epochs=50)
-
-fig1 = plt.gcf()
-plt.plot(history.history['accuracy'])
-plt.plot(history.history['val_accuracy'])
-plt.axis(ymin=0.4,ymax=1)
-plt.grid()
-plt.title('Model Accuracy')
-plt.ylabel('Accuracy')
-plt.xlabel('Epochs')
-plt.legend(['train', 'validation'])
-plt.show()
+history = resnet_model.fit(train_set, validation_data=test_set, epochs=100)
 
 resnet_model.save('./Results/ResNet_model.h5')
+
+# summarize history for accuracy
+plt.plot(resnet_model.history['accuracy'])
+plt.plot(resnet_model.history['val_accuracy'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.savefig('./Results/ResNetaccuracy.pdf')
+
+plt.clf()
+
+# summarize history for loss
+plt.plot(resnet_model.history['loss'])
+plt.plot(resnet_model.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.savefig('./Results/ResNetloss.pdf')

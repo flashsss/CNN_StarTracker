@@ -8,6 +8,7 @@ from keras.models import Sequential
 import numpy as np
 from glob import glob
 import matplotlib.pyplot as plt
+from tensorflow.keras.optimizers import Adam
 
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
@@ -26,11 +27,7 @@ prediction = Dense(len(folders), activation='softmax')(x)
 model = Model(inputs=vgg.input, outputs=prediction)
 model.summary()
 
-from keras import optimizers
-
-model.compile(loss='binary_crossentropy',
-              optimizer='rmsprop',
-              metrics=['accuracy'])
+model.compile(optimizer=Adam(lr=0.001),loss='categorical_crossentropy',metrics=['accuracy'])
 
 train_datagen = ImageDataGenerator(
     preprocessing_function=preprocess_input,
@@ -65,29 +62,34 @@ test_set = test_datagen.flow_from_directory(test_path,
 from datetime import datetime
 from keras.callbacks import ModelCheckpoint
 
-checkpoint = ModelCheckpoint(filepath='VGG16model.h5', 
-                               verbose=2, save_best_only=True)
-
-callbacks = [checkpoint]
-
 start = datetime.now()
 
-model_history=model.fit_generator(
+model_history=model.fit(
   train_set,
   validation_data=test_set,
-  epochs=50,
-  validation_steps=32,
-    callbacks=callbacks ,verbose=2)
+  epochs=100)
 
 duration = datetime.now() - start
 print("Training completed in time: ", duration)
 
-#Plot training & validation loss values
+model_history.save('./Results/VGG16_model.h5')
+
+# summarize history for accuracy
 plt.plot(model_history.history['accuracy'])
 plt.plot(model_history.history['val_accuracy'])
-plt.title('CNN Model accuracy values')
-plt.ylabel('Accuracy')
-plt.xlabel('Epoch')
-plt.legend(['Train', 'Test'], loc='upper left')
-plt.show()
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.savefig('./Results/VGGaccuracy.pdf')
 
+plt.clf()
+
+# summarize history for loss
+plt.plot(model_history.history['loss'])
+plt.plot(model_history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train', 'test'], loc='upper left')
+plt.savefig('./Results/VGGloss.pdf')
