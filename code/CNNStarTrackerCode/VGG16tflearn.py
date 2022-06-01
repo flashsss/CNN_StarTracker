@@ -64,7 +64,7 @@ model_history=model.fit_generator(
 duration = datetime.now() - start
 print("Training completed in time: ", duration)
 
-model.save('./Results/preprocessed_features_model.h5')
+model.save('./Results/VGG16_model.h5')
 
 # summarize history for accuracy
 plt.plot(model_history.history['accuracy'])
@@ -73,7 +73,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('./Results/VGGaccuracy.pdf')
+plt.savefig('./Results/VGG16Accuracy.pdf')
 
 plt.clf()
 
@@ -84,4 +84,4 @@ plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('./Results/VGGloss.pdf')
+plt.savefig('./Results/VGG16Loss.pdf')

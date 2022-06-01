@@ -43,7 +43,14 @@ test_set = test_datagen.flow_from_directory(test_path,
                                             batch_size = 32,
                                             class_mode = 'categorical')
 
+from datetime import datetime
+
+start = datetime.now()
+
 history = resnet_model.fit(train_set, validation_data=test_set, epochs=100)
+
+duration = datetime.now() - start
+print("Training completed in time: ", duration)
 
 resnet_model.save('./Results/ResNet_model.h5')
 
