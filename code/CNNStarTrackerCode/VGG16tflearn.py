@@ -27,7 +27,9 @@ prediction = Dense(len(folders), activation='softmax')(x)
 model = Model(inputs=vgg.input, outputs=prediction)
 model.summary()
 
-model.compile(optimizer=Adam(lr=0.001),loss='categorical_crossentropy',metrics=['accuracy'])
+model.compile(loss='binary_crossentropy',
+              optimizer='rmsprop',
+              metrics=['accuracy'])
 
 train_datagen = ImageDataGenerator(
     preprocessing_function=preprocess_input,
@@ -64,15 +66,16 @@ from keras.callbacks import ModelCheckpoint
 
 start = datetime.now()
 
-model_history=model.fit(
+model_history=model.fit_generator(
   train_set,
   validation_data=test_set,
-  epochs=100)
+  epochs=100,
+  validation_steps=32)
 
 duration = datetime.now() - start
 print("Training completed in time: ", duration)
 
-model_history.save('./Results/VGG16_model.h5')
+model_history.save('./Results/preprocessed_features_model.h5')
 
 # summarize history for accuracy
 plt.plot(model_history.history['accuracy'])
