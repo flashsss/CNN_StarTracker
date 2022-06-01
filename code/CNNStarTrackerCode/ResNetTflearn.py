@@ -55,7 +55,7 @@ test_set = test_datagen.flow_from_directory(test_path,
                                             batch_size = 32,
                                             class_mode = 'categorical')
 
-history = resnet_model.fit(train_set, validation_data=test_set, epochs=30)
+history = resnet_model.fit(train_set, validation_data=test_set, epochs=50)
 
 fig1 = plt.gcf()
 plt.plot(history.history['accuracy'])

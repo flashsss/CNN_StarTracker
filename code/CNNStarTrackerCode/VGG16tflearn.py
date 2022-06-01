@@ -65,6 +65,9 @@ test_set = test_datagen.flow_from_directory(test_path,
 from datetime import datetime
 from keras.callbacks import ModelCheckpoint
 
+checkpoint = ModelCheckpoint(filepath='VGG16model.h5', 
+                               verbose=2, save_best_only=True)
+
 callbacks = [checkpoint]
 
 start = datetime.now()
@@ -72,14 +75,12 @@ start = datetime.now()
 model_history=model.fit_generator(
   train_set,
   validation_data=test_set,
-  epochs=30,
+  epochs=50,
   validation_steps=32,
     callbacks=callbacks ,verbose=2)
 
 duration = datetime.now() - start
 print("Training completed in time: ", duration)
-
-model.save('./Results/VGG_model.h5')
 
 #Plot training & validation loss values
 plt.plot(model_history.history['accuracy'])
