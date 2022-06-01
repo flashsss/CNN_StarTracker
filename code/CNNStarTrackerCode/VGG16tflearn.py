@@ -65,9 +65,6 @@ test_set = test_datagen.flow_from_directory(test_path,
 from datetime import datetime
 from keras.callbacks import ModelCheckpoint
 
-checkpoint = ModelCheckpoint(filepath='VGG16model.h5', 
-                               verbose=2, save_best_only=True)
-
 callbacks = [checkpoint]
 
 start = datetime.now()
@@ -82,7 +79,7 @@ model_history=model.fit_generator(
 duration = datetime.now() - start
 print("Training completed in time: ", duration)
 
-# Plot training & validation loss values
+#Plot training & validation loss values
 plt.plot(model_history.history['accuracy'])
 plt.plot(model_history.history['val_accuracy'])
 plt.title('CNN Model accuracy values')
@@ -91,3 +88,4 @@ plt.xlabel('Epoch')
 plt.legend(['Train', 'Test'], loc='upper left')
 plt.show()
 
+model.save('./Results/VGG_model.h5')
