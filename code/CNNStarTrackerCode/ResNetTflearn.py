@@ -47,7 +47,7 @@ from datetime import datetime
 
 start = datetime.now()
 
-history = resnet_model.fit(train_set, validation_data=test_set, epochs=100)
+history = resnet_model.fit(train_set, validation_data=test_set, epochs=50)
 
 duration = datetime.now() - start
 print("Training completed in time: ", duration)
