@@ -14,7 +14,7 @@ resnet_model = Sequential()
 
 pretrained_model= tf.keras.applications.ResNet50(include_top=False,
                    input_shape=(224,224,3),
-                   pooling='avg',classes=5,
+                   pooling='avg',classes=480,
                    weights='imagenet')
 for layer in pretrained_model.layers:
         layer.trainable=False
@@ -26,24 +26,12 @@ resnet_model.add(tf.keras.layers.Dense(units=480, activation='softmax'))
 resnet_model.compile(optimizer=Adam(lr=0.001),loss='categorical_crossentropy',metrics=['accuracy'])
 
 train_datagen = ImageDataGenerator(
-    preprocessing_function=preprocess_input,
-    rotation_range=40,
-    width_shift_range=0.2,
-    height_shift_range=0.2,
+    rescale=1./255,
     shear_range=0.2,
     zoom_range=0.2,
-    horizontal_flip=True,
-    fill_mode='nearest')
+    horizontal_flip=True)
 
-test_datagen = ImageDataGenerator(
-    preprocessing_function=preprocess_input,
-    rotation_range=40,
-    width_shift_range=0.2,
-    height_shift_range=0.2,
-    shear_range=0.2,
-    zoom_range=0.2,
-    horizontal_flip=True,
-    fill_mode='nearest')
+test_datagen = ImageDataGenerator(rescale=1./255)
 
 train_set = train_datagen.flow_from_directory(train_path,
                                                  target_size = (224, 224),
