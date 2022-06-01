@@ -79,6 +79,8 @@ model_history=model.fit_generator(
 duration = datetime.now() - start
 print("Training completed in time: ", duration)
 
+model.save('./Results/VGG_model.h5')
+
 #Plot training & validation loss values
 plt.plot(model_history.history['accuracy'])
 plt.plot(model_history.history['val_accuracy'])
@@ -88,4 +90,3 @@ plt.xlabel('Epoch')
 plt.legend(['Train', 'Test'], loc='upper left')
 plt.show()
 
-model.save('./Results/VGG_model.h5')
