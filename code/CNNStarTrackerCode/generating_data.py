@@ -406,7 +406,7 @@ for i in range(480):
 for index,image in enumerate(images):
     count = 1
     path = './dataset/'+featureMethod+'/train/'+str(index)+'/'
-    for angle in np.arange(0,360,1):
+    for angle in np.arange(0,360,2.5):
       rotated = imutils.rotate_bound(image,angle)
       rotated = multitriangles_detector(rotated,5)
       rotated = cv2.resize(rotated, (224, 224), interpolation=cv2.INTER_NEAREST)
