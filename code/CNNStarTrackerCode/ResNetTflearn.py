@@ -14,8 +14,9 @@ resnet_model = Sequential()
 
 pretrained_model= tf.keras.applications.ResNet50(include_top=False,
                    input_shape=(224,224,3),
-                   pooling='avg',classes=480,
+                   pooling='max',classes=480,
                    weights='imagenet')
+
 for layer in pretrained_model.layers:
         layer.trainable=False
 
@@ -47,7 +48,7 @@ from datetime import datetime
 
 start = datetime.now()
 
-history = resnet_model.fit(train_set, validation_data=test_set, epochs=50)
+hist = resnet_model.fit(train_set, validation_data=test_set, epochs=50)
 
 duration = datetime.now() - start
 print("Training completed in time: ", duration)
@@ -55,8 +56,8 @@ print("Training completed in time: ", duration)
 resnet_model.save('./Results/ResNet_model.h5')
 
 # summarize history for accuracy
-plt.plot(resnet_model.history['accuracy'])
-plt.plot(resnet_model.history['val_accuracy'])
+plt.plot(hist.history['accuracy'])
+plt.plot(hist.history['val_accuracy'])
 plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
@@ -66,8 +67,8 @@ plt.savefig('./Results/ResNetaccuracy.pdf')
 plt.clf()
 
 # summarize history for loss
-plt.plot(resnet_model.history['loss'])
-plt.plot(resnet_model.history['val_loss'])
+plt.plot(hist.history['loss'])
+plt.plot(hist.history['val_loss'])
 plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
