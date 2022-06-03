@@ -65,7 +65,7 @@ def Spiderweb_detector(image,n):
     # Draw lines from pivot point to other stars
     for coordinate in stars_coordinate:
         coordinate = coordinate[0:2]
-        cv2.line(img,pivot_star_coord,tuple(coordinate),(0,255,0),1)
+        cv2.line(img,pivot_star_coord,tuple(coordinate),(0,255,0),2)
     
     c = len(coord)
 
@@ -86,9 +86,9 @@ def Spiderweb_detector(image,n):
         rows, columns = line.shape
 
         for a in range(rows-1) :
-          cv2.line(img, tuple(line[a]), tuple(line[a+1]), (0,0,255), 1)
+          cv2.line(img, tuple(line[a]), tuple(line[a+1]), (0,0,255), 2)
 
-        cv2.line(img, tuple(line[rows-1]),tuple(line[0]),(0,0,255),1)
+        cv2.line(img, tuple(line[rows-1]),tuple(line[0]),(0,0,255),2)
         return img
     else :
       return img
