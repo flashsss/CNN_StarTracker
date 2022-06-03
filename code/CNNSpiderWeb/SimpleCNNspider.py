@@ -71,23 +71,23 @@ print("Training completed in time: ", duration)
 # summarize history for accuracy
 plt.plot(history.history['accuracy'])
 plt.plot(history.history['val_accuracy'])
-plt.title('model accuracy')
+plt.title('Simple CNN SpiderWeb accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('./Results/accuracy.pdf')
+plt.savefig('./Results/SimpleSpideraccuracy.pdf')
 
 plt.clf()
 
 # summarize history for loss
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
-plt.title('model loss')
+plt.title('Simple CNN SpiderWeb loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('./Results/loss.pdf')
+plt.savefig('./Results/SimpleSpiderloss.pdf')
 
 
 #SAVING THE MODEL
-cnn.save('./Results/SimpleCNN_model.h5')
+cnn.save('./Results/SimpleCNNSpider_model.h5')

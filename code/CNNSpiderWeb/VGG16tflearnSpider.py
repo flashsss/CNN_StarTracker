@@ -61,24 +61,24 @@ model_history=model.fit_generator(
 duration = datetime.now() - start
 print("Training completed in time: ", duration)
 
-model.save('./Results/VGG16_model.h5')
+model.save('./Results/VGG16Spider_model.h5')
 
 # summarize history for accuracy
 plt.plot(model_history.history['accuracy'])
 plt.plot(model_history.history['val_accuracy'])
-plt.title('model accuracy')
+plt.title('VGG16 Spiderweb accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('./Results/VGG16Accuracy.pdf')
+plt.savefig('./Results/VGG16spiderAccuracy.pdf')
 
 plt.clf()
 
 # summarize history for loss
 plt.plot(model_history.history['loss'])
 plt.plot(model_history.history['val_loss'])
-plt.title('model loss')
+plt.title('VGG16 Spiderweb loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig('./Results/VGG16Loss.pdf')
+plt.savefig('./Results/VGG16spiderLoss.pdf')
