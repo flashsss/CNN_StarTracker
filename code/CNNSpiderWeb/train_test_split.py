@@ -25,13 +25,13 @@ path = './dataset/'+featureMethod
 folders = os.listdir(path+'/train/') #['0', '1', '2', '3', '4', '5', '6', '7']
 
 for folder in folders:
-    shuffled = get_files_and_shuffle(path+'/train/'+str(folder)) #List of shuffled list -> name of files of type string
+    shuffled = get_files_and_shuffle(path+'/train/'+'STAR_ID_'+str(folder)) #List of shuffled list -> name of files of type string
     test_files = extract_from_list(shuffled,0.2)
     for filename in test_files:
-        shutil.move(path+'/train/'+str(folder)+'/'+str(filename),path+'/test/'+str(folder)+'/'+str(filename))
+        shutil.move(path+'/train/'+'STAR_ID_'+str(folder)+'/'+str(filename),path+'/test/'+'STAR_ID_'+str(folder)+'/'+str(filename))
 
-number_of_train = len(os.listdir(path+'/train/0/'))
-number_of_test = len(os.listdir(path+'/test/0/'))
+number_of_train = len(os.listdir(path+'/train/STAR_ID_0/'))
+number_of_test = len(os.listdir(path+'/test/STAR_ID_0/'))
 print("Number of training files per class: ",number_of_train)
 print("Number of testing files per class: ",number_of_test)
 print("Ratio of test/train: ",(number_of_test/number_of_train))
