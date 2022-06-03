@@ -27,9 +27,7 @@ prediction = Dense(len(folders), activation='softmax')(x)
 model = Model(inputs=vgg.input, outputs=prediction)
 model.summary()
 
-model.compile(loss='categorical_crossentropy',
-              optimizer=Adam(learning_rate=0.001),
-              metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy', optimizer=Adam(learning_rate=0.001), metrics=['accuracy'])
 
 train_datagen = ImageDataGenerator(rescale = 1./255,
                                    shear_range = 0.2,
@@ -50,7 +48,6 @@ test_set = test_datagen.flow_from_directory(test_path,
                                             class_mode = 'categorical')
 
 from datetime import datetime
-from keras.callbacks import ModelCheckpoint
 
 start = datetime.now()
 

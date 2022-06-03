@@ -23,7 +23,7 @@ resnet_model.add(pretrained_model)
 resnet_model.add(tf.keras.layers.Flatten())
 resnet_model.add(tf.keras.layers.Dense(units=512, activation='relu'))
 resnet_model.add(tf.keras.layers.Dense(units=480, activation='softmax'))
-resnet_model.compile(optimizer=Adam(lr=0.001),loss='categorical_crossentropy',metrics=['accuracy'])
+resnet_model.compile(optimizer=Adam(learning_rate=0.001),loss='categorical_crossentropy',metrics=['accuracy'])
 
 train_datagen = ImageDataGenerator(
     rescale=1./255,
