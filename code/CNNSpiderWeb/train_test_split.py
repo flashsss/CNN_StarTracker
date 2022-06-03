@@ -20,7 +20,7 @@ def extract_from_list(list,ratio):
 
 """# Train Test Split - Main"""
 
-featureMethod = 'multitriangle'
+featureMethod = 'SpiderWeb'
 path = './dataset/'+featureMethod
 folders = os.listdir(path+'/train/') #['0', '1', '2', '3', '4', '5', '6', '7']
 
