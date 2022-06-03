@@ -412,9 +412,9 @@ for filename in os.listdir(path):
 
 #Saving the default image to a directory
 for index,image in enumerate(dataset):
-  path = './dataset/'+featureMethod+'/train/'+'STAR_ID_'+str(index)+'/'
+  path = './dataset/'+featureMethod+'/train/'+str(index)+'/'
   os.mkdir(path)
-  os.mkdir('./dataset/'+featureMethod+'/test/'+'STAR_ID_'+str(index)+'/')
+  os.mkdir('./dataset/'+featureMethod+'/test/'+str(index)+'/')
   file_name = '0.jpg'
   cv2.imwrite(path+file_name,image)
 
@@ -422,14 +422,14 @@ featureMethod = 'SpiderWeb'
 images = []
 
 for i in range(480):
-    path = './dataset/'+featureMethod+'/train/'+'STAR_ID_'+str(i)
+    path = './dataset/'+featureMethod+'/train/'+str(i)
     img = cv2.imread(path+'/0.jpg')
     # img = img[:,50:350]
     images.append(img)
 
 for index,image in enumerate(images):
     count = 1
-    path = './dataset/'+featureMethod+'/train/'+'STAR_ID_'+str(index)+'/'
+    path = './dataset/'+featureMethod+'/train/'+str(index)+'/'
     for angle in np.arange(0,360,2.5):
       rotated = imutils.rotate_bound(image,angle)
       rotated = Spiderweb_detector(rotated,6)
