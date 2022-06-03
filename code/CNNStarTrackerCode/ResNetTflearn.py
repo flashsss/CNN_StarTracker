@@ -13,7 +13,7 @@ test_path = './dataset/multitriangle/test'
 resnet_model = Sequential()
 
 pretrained_model= tf.keras.applications.ResNet50(include_top=False,
-                   input_shape=(224,224,3),
+                   input_shape=(180,180,3),
                    pooling='max',classes=480,
                    weights='imagenet')
 
@@ -35,12 +35,12 @@ train_datagen = ImageDataGenerator(
 test_datagen = ImageDataGenerator(rescale=1./255)
 
 train_set = train_datagen.flow_from_directory(train_path,
-                                                 target_size = (224, 224),
+                                                 target_size = (180, 180),
                                                  batch_size = 32,
                                                  class_mode = 'categorical')
 
 test_set = test_datagen.flow_from_directory(test_path,
-                                            target_size = (224, 224),
+                                            target_size = (180, 180),
                                             batch_size = 32,
                                             class_mode = 'categorical')
 
