@@ -10,7 +10,7 @@ from tensorflow.keras.optimizers import Adam
 #To prevent overfitting -> training on the same images
 #DATA PREPROCESSING
 #TRAIN
-featureMethod = 'multitriangle'
+featureMethod = 'SpiderWeb'
 path = './dataset/'+featureMethod
 train_datagen = ImageDataGenerator(
     rescale=1./255,

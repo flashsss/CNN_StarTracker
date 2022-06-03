@@ -7,8 +7,8 @@ from keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.optimizers import Adam
 from keras.applications.vgg16 import preprocess_input
 
-train_path = './dataset/multitriangle/train'
-test_path = './dataset/multitriangle/test'
+train_path = './dataset/SpiderWeb/train'
+test_path = './dataset/SpiderWeb/test'
 
 resnet_model = Sequential()
 

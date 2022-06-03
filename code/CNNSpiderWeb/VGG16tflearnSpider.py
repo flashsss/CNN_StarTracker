@@ -14,13 +14,13 @@ import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 IMAGE_SIZE = [224, 224]
-train_path = './dataset/multitriangle/train'
-test_path = './dataset/multitriangle/test'
+train_path = './dataset/SpiderWeb/train'
+test_path = './dataset/SpiderWeb/test'
 vgg = VGG16(input_shape=IMAGE_SIZE + [3], weights='imagenet', include_top=False)
 vgg.input
 for layer in vgg.layers:
   layer.trainable = False
-folders = glob('./dataset/multitriangle/train/*')
+folders = glob('./dataset/SpiderWeb/train/*')
 print(len(folders))
 x = Flatten()(vgg.output)
 prediction = Dense(len(folders), activation='softmax')(x)
