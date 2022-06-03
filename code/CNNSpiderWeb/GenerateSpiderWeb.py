@@ -430,7 +430,7 @@ for i in range(480):
 for index,image in enumerate(images):
     count = 1
     path = './dataset/'+featureMethod+'/train/'+'STAR ID '+str(index)+'/'
-    for angle in np.arange(0,360,120):
+    for angle in np.arange(0,360,2.5):
       rotated = imutils.rotate_bound(image,angle)
       rotated = Spiderweb_detector(rotated,6)
       rotated = cv2.resize(rotated, (224, 224), interpolation=cv2.INTER_NEAREST)
