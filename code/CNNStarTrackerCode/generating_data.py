@@ -65,7 +65,7 @@ def multitriangles_detector(image,n):
                 continue
             else:
                 other_coord = tuple(other_coord)
-                cv2.line(img,coord,other_coord,(255,255,255),1)
+                cv2.line(img,coord,other_coord,(0,255,0),2)
 
     return img
 
@@ -408,7 +408,7 @@ for index,image in enumerate(images):
     path = './dataset/'+featureMethod+'/train/'+str(index)+'/'
     for angle in np.arange(0,360,2.5):
       rotated = imutils.rotate_bound(image,angle)
-      rotated = multitriangles_detector(rotated,5)
+      rotated = multitriangles_detector(rotated,6)
       rotated = cv2.resize(rotated, (224, 224), interpolation=cv2.INTER_NEAREST)
       cv2.imwrite(path+str(count)+'.jpg',rotated)
       print("DONE SAVING...",path+str(count)+'.jpg')
