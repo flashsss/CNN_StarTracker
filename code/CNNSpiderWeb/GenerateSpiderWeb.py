@@ -22,9 +22,9 @@ def displayImg(img,cmap='gray'):
     ax.imshow(img,cmap)
     plt.show()
 
-#Multitriangles Algorithm
+#Spider web Algorithm
 def Spiderweb_detector(image,n):
-    # img = cv2.imread(path) 
+    #img = cv2.imread(path) 
     img = image 
 
     #Find the center of the image
